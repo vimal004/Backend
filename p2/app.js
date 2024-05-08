@@ -2,11 +2,9 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const users = require("./routes/users");
+const home = require("./routes/home");
 app.use("/api/users", users);
-
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
+app.use("/", home);
 
 const Port = process.env.port || 3000;
 app.listen(Port, () => {
