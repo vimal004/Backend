@@ -13,7 +13,7 @@ mongoose
   });
 
 const userSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true, minlength: 4 },
   email: String,
   password: String,
 });
@@ -36,13 +36,38 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.post("/api/users", async (req, res) => {
+  const { error } = User.validate(req.body);
+  if (error) {
+    res.send(error.details[0].message);
+    return;
+  }
   let data = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   });
+
   data = await data.save();
   res.send(data);
+});
+
+app.put("/api/users", async (req, res) => {
+  const { error } = User.validate(req.body);
+  if (error) {
+    res.send("error occured");
+    return;
+  }
+  const result = await User.findByIdAndUpdate(req.body._id, {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  res.send(result);
+});
+
+app.delete("/api/users/:_id", async (req, res) => {
+  const result = await User.findByIdAndDelete(req.params._id);
+  res.send(result);
 });
 
 app.listen(3000, () => {
