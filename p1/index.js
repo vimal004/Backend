@@ -10,7 +10,7 @@ mongoose
   .catch((err) => {
     console.log("Error in connecting to the Mongo DB", err);
   });
-//hello
+
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
