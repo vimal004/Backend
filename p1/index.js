@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
+//hello
+
 const movieSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   plot: String,
